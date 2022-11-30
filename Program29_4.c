@@ -1,10 +1,10 @@
-// Write a program which return largest element from singly linked list
+// Write a program and return second maximum element from singly linked list
 
 // Function Prototype :
 
-// int Maximum(PNODE Head)
+// int SecMaximum(PNODE Head)
 // Input Linked List : |110|->|230|->|320|->|240|
-// Output : 320
+// Output : 240
 
 #include<stdio.h>
 #include<stdlib.h>
@@ -40,21 +40,45 @@ void InsertFirst(PPNODE Head, int No)
     }
 }
 
-int Maximum(PNODE Head)
+int Maximum(PNODE Start)
 {
-    int iMax = Head->Data;
+    int iMax = 0;
+
+    while(Start != NULL)
+    {
+        if(iMax < Start->Data)
+        {
+            iMax = Start->Data;
+        }
+
+        Start = Start->Next;
+    }
+
+    return iMax;
+}
+
+int SecMaximum(PNODE Head)
+{
+    int iMax = 0, iSecMax = 0;
+    iMax = Maximum(Head);
 
     while(Head != NULL)
     {
-        if(iMax < Head->Data)
+        if(Head->Data == iMax)
         {
-            iMax = Head->Data;
+            Head = Head->Next;
+            continue;
+        }
+
+        if(iSecMax < Head->Data)
+        {
+            iSecMax = Head->Data;
         }
 
         Head = Head->Next;
     }
 
-    return iMax;
+    return iSecMax;
 }
 
 int main()
@@ -67,9 +91,9 @@ int main()
     InsertFirst(&First, 230);
     InsertFirst(&First, 110);
 
-    iRet = Maximum(First);
+    iRet = SecMaximum(First);
 
-    printf("Maximum number in linked list is : %d",iRet);
+    printf("Second maximum element from linked list is : %d",iRet);
 
     return 0;
 }

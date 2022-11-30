@@ -1,10 +1,10 @@
-// Write a program and return addition of elements which are even from singly linked list
+// Write a program and display addition of digits of element which are even from singly linked list
 
 // Function Prototype :
 
-// int AdditionEven(PNODE Head)
-// Input Linked List : |11|->|20|->|32|->|41|
-// Output : 52
+// void SumDigit(PNODE Head)
+// Input Linked List : |110|->|230|->|20|->|240|->|640|
+// Output : 2   5   2   6   10
 
 #include<stdio.h>
 #include<stdlib.h>
@@ -40,21 +40,24 @@ void InsertFirst(PPNODE Head, int No)
     }
 }
 
-int AdditionEven(PNODE Head)
+void SumDigit(PNODE Head)
 {
-    int iEvenSum = 0;
+    int iDigit = 0, iSumDigit = 0;
 
     while(Head != NULL)
     {
-        if((Head->Data % 2) == 0)
+        while(Head->Data != 0)
         {
-            iEvenSum = iEvenSum + Head->Data;
+            iDigit = Head->Data % 10;
+            Head->Data = Head->Data / 10;
+            iSumDigit = iSumDigit + iDigit;
         }
 
+        printf("%d\t",iSumDigit);
+
+        iSumDigit = 0;
         Head = Head->Next;
     }
-
-    return iEvenSum;
 }
 
 int main()
@@ -62,14 +65,13 @@ int main()
     PNODE First = NULL;
     int iRet = 0;
 
-    InsertFirst(&First, 41);
-    InsertFirst(&First, 32);
+    InsertFirst(&First, 640);
+    InsertFirst(&First, 240);
     InsertFirst(&First, 20);
-    InsertFirst(&First, 11);
+    InsertFirst(&First, 230);
+    InsertFirst(&First, 110);
 
-    iRet = AdditionEven(First);
-
-    printf("Addition of even elements from linked list is : %d",iRet);
+    SumDigit(First);
 
     return 0;
 }
