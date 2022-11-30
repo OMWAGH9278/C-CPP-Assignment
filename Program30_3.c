@@ -1,9 +1,9 @@
-// Write a program to display palindrome elements from singly linked list
+// Write a program to display product of digits of all elements of singly linear linked list
 
 // Function Prototype :
-// void DisplayPalindrome(PNODE Head)
-// Input Linked List : |11|->|28|->|17|->|414|->|6|->|89|
-// Output : 11  6   414
+// void DisplayProduct(PNODE Head)
+// Input Linked List : |11|->|20|->|32|->|41|
+// Output : 1   2   6   4
 
 #include<stdio.h>
 #include<stdlib.h>
@@ -29,7 +29,7 @@ void InsertFirst(PPNODE First, int No)
     {
         *First = newn;
     }
-    else  
+    else 
     {
         newn->next = *First;
         *First = newn;
@@ -49,27 +49,25 @@ void Display(PNODE First)
     printf("NULL\n");
 }
 
-void DisplayPalindrome(PNODE First)
+void DisplayProduct(PNODE First)
 {
-    int iDigit = 0, iTemp = 0, iRev = 0;
+    int iDigit = 0, iProduct = 1;
 
     while(First != NULL)
     {
-        iTemp = First->data;
-
-        while(iTemp != 0)
+        while(First->data != 0)
         {
-            iDigit = iTemp % 10;
-            iTemp = iTemp / 10;
-            iRev = (iRev * 10) + iDigit;
+            iDigit = First->data % 10;
+            First->data = First->data / 10;
+            if(iDigit == 0)
+            {
+                continue;
+            }
+            iProduct = iProduct * iDigit;
         }
 
-        if((First->data) == iRev)
-        {
-            printf("%d\t",First->data);
-        }
-
-        iRev = 0;
+        printf("%d\t",iProduct);
+        iProduct = 1;
         First = First->next;
     }
 }
@@ -78,16 +76,14 @@ int main()
 {
     PNODE Head = NULL;
 
-    InsertFirst(&Head, 89);
-    InsertFirst(&Head, 6);
-    InsertFirst(&Head, 414);
-    InsertFirst(&Head, 17);
-    InsertFirst(&Head, 28);
+    InsertFirst(&Head, 41);
+    InsertFirst(&Head, 32);
+    InsertFirst(&Head, 20);
     InsertFirst(&Head, 11);
 
     Display(Head);
 
-    DisplayPalindrome(Head);
+    DisplayProduct(Head);
 
     return 0;
 }

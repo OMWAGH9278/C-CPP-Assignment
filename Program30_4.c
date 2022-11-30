@@ -1,9 +1,9 @@
-// Write a program to display palindrome elements from singly linked list
+// Write a program to display smallest digits from all elements of singly linear linked list
 
 // Function Prototype :
-// void DisplayPalindrome(PNODE Head)
-// Input Linked List : |11|->|28|->|17|->|414|->|6|->|89|
-// Output : 11  6   414
+// void DisplaySmall(PNODE Head)
+// Input Linked List : |11|->|250|->|532|->|415|
+// Output : 1   0   2   1
 
 #include<stdio.h>
 #include<stdlib.h>
@@ -29,7 +29,7 @@ void InsertFirst(PPNODE First, int No)
     {
         *First = newn;
     }
-    else  
+    else
     {
         newn->next = *First;
         *First = newn;
@@ -38,8 +38,6 @@ void InsertFirst(PPNODE First, int No)
 
 void Display(PNODE First)
 {
-    printf("Elements of linked list are :\n");
-
     while(First != NULL)
     {
         printf("|%d|->",First->data);
@@ -49,27 +47,24 @@ void Display(PNODE First)
     printf("NULL\n");
 }
 
-void DisplayPalindrome(PNODE First)
+void DisplaySmall(PNODE First)
 {
-    int iDigit = 0, iTemp = 0, iRev = 0;
+    int iDigit = 0, iMin = 9;
 
     while(First != NULL)
     {
-        iTemp = First->data;
-
-        while(iTemp != 0)
+        while(First->data != 0)
         {
-            iDigit = iTemp % 10;
-            iTemp = iTemp / 10;
-            iRev = (iRev * 10) + iDigit;
+            iDigit = First->data % 10;
+            First->data = First->data / 10;
+            if(iDigit < iMin)
+            {
+                iMin = iDigit;
+            }
         }
 
-        if((First->data) == iRev)
-        {
-            printf("%d\t",First->data);
-        }
-
-        iRev = 0;
+        printf("%d\t",iMin);
+        iMin = 9;
         First = First->next;
     }
 }
@@ -78,16 +73,14 @@ int main()
 {
     PNODE Head = NULL;
 
-    InsertFirst(&Head, 89);
-    InsertFirst(&Head, 6);
-    InsertFirst(&Head, 414);
-    InsertFirst(&Head, 17);
-    InsertFirst(&Head, 28);
+    InsertFirst(&Head, 415);
+    InsertFirst(&Head, 532);
+    InsertFirst(&Head, 250);
     InsertFirst(&Head, 11);
 
     Display(Head);
 
-    DisplayPalindrome(Head);
+    DisplaySmall(Head);
 
     return 0;
 }
